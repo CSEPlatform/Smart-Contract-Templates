@@ -3,7 +3,6 @@ import Act from './act'
 import Process from './process'
 class TokenMain extends Contract {
   static viewFuncs = [
-    'get_Orther',
     'get_Donation',
     'get_Passive_Investment',
     'get_Active_Investment',
@@ -20,8 +19,11 @@ class TokenMain extends Contract {
   static publicFuncs = [
     'Orther',
     'Donation',
+    'get_Donation',
     'Passive_Investment',
+    'get_Passive_Investment',
     'Active_Investment',
+    'get_Active_Investment',
     'Intrinsic_Value',
     'Pre_purchase',
     'Patronage',
@@ -29,12 +31,11 @@ class TokenMain extends Contract {
     'PPO',
     'Profit_Sharing',
     'Patronage_Plus'
-
   ]
   static schemas = {
     name: {
       type: String,
-      default: 'MODEL_CROWFUNDINGS'
+      default: 'CROWFUNDINGS-MODEL-01'
     },
     accounts: [
       {
@@ -57,11 +58,8 @@ class TokenMain extends Contract {
   //---------------------act------------------------------
   async Orther() {
     let Orther = await this._act.createAct('ORTHER')
-    return Orther
-  }
-  get_Orther() {
-    let Orther = this._act.getActByType('ORTHER')
-    return Orther
+    this.setToAddress(Orther.address)
+    return 'SUCCESS'
   }
   async Donation() {
     let Donation = await this._act.createAct('DONATION')
@@ -72,11 +70,11 @@ class TokenMain extends Contract {
     return Donation
   }
   async Passive_Investment() {
-    let Passive_Investment = await this._act.createAct('PASS_INVESTMENT')
+    let Passive_Investment = await this._act.createAct('PASSIVE_INVESTMENT')
     return Passive_Investment
   }
   get_Passive_Investment() {
-    let Passive_Investment = this._act.getActByType('PASS_INVESTMENT')
+    let Passive_Investment = this._act.getActByType('PASSIVE_INVESTMENT')
     return Passive_Investment
   }
   async Active_Investment() {
