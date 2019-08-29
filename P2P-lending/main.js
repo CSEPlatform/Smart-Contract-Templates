@@ -129,7 +129,7 @@ class TokenMain extends Contract {
     return Establish_Repayment_Secuity_deposit
   }
   get_Establish_Repayment_Secuity_deposit() {
-    return this._tax.getTaxByType('ESTABLISH_REPAYMENT_SECURITY_DEPOSIT')
+    return this._act.getActByType('ESTABLISH_REPAYMENT_SECURITY_DEPOSIT')
   }
   // --------------------Check_Compliance---------------------------  
   Check_Compliance1(address) {
@@ -157,9 +157,9 @@ class TokenMain extends Contract {
   get_Establish_Repayment_Secuity_deposit_or_Sumit_Material_or_Investigate_and_VerificationInvestigate_and_Verification() {
     return this._act.getActByType('ESTABLISH_REPAYMENT_SECURITY_DEPOSIT_OR_SUMIT_MATERIAL_OR_INVESTIGATE_AND_VERIFICATION')
   }
-  async Check_Compliance(address_BC6_Application_or_BC5_Taxable_income) {
+  async Check_Compliance(address_Establish_Repayment_Secuity_deposit_or_Sumit_Material_or_Investigate_and_VerificationInvestigate_and_Verification) {
     this._process.checkProcess(this.sender, 'P2P_LENDING')
-    let Check_Compliance = this._act.getActByAddress(address_BC6_Application_or_BC5_Taxable_income)
+    let Check_Compliance = this._act.getActByAddress(address_Establish_Repayment_Secuity_deposit_or_Sumit_Material_or_Investigate_and_VerificationInvestigate_and_Verification)
     if (!Check_Compliance || Check_Compliance.type !== 'ESTABLISH_REPAYMENT_SECURITY_DEPOSIT_OR_SUMIT_MATERIAL_OR_INVESTIGATE_AND_VERIFICATION')
       throw 'ESTABLISH_REPAYMENT_SECURITY_DEPOSIT_OR_SUMIT_MATERIAL_OR_INVESTIGATE_AND_VERIFICATION IS NOT EXIST'
     let Check_Compliance2 = await this._act.createAct('CHECK_COMPLIANCE')
