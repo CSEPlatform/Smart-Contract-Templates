@@ -3,13 +3,17 @@ import Process from './process'
 import Tax from './tax'
 class TokenMain extends Contract {
   static viewFuncs = [
-
+    'get_BC',
+    'get_BC6_Application',
+    'get_BC5_Taxable_income',
+    'get_BC6_Application_or_BC5_Taxable_income',
+    'get_Bacsic_tax_rate',
+    'get_Equals',
+    'get_BC6_Result_negative_income_tax_liability',
+    'get_BC6_Result_positive_income_tax_liability',
+    'get_BC6_Result_negative_or_positive_income_tax_liability',
   ]
   static authenticationFuncs = [
-
-  ]
-  static publicFuncs = [
-    'BC',
     'BC6_Application',
     'BC5_Taxable_income',
     'BC6_Application_or_BC5_Taxable_income',
@@ -19,6 +23,28 @@ class TokenMain extends Contract {
     'BC6_Result_positive_income_tax_liability',
     'BC6_Result_negative_or_positive_income_tax_liability',
     'BC8_Saticfaction_of_income_tax_liability'
+  ]
+  static publicFuncs = [
+    'BC',
+	'get_BC',
+    'BC6_Application',
+	'get_BC6_Application',
+    'BC5_Taxable_income',
+	'get_BC5_Taxable_income',
+    'BC6_Application_or_BC5_Taxable_income',
+	'get_BC6_Application_or_BC5_Taxable_income',
+    'Bacsic_tax_rate',
+	'get_Bacsic_tax_rate',
+    'Equals',
+	'get_Equals',
+    'BC6_Result_negative_income_tax_liability',
+	'get_BC6_Result_negative_income_tax_liability',
+    'BC6_Result_positive_income_tax_liability',
+	'get_BC6_Result_positive_income_tax_liability'
+    'BC6_Result_negative_or_positive_income_tax_liability',
+	'get_BC6_Result_negative_or_positive_income_tax_liability',
+    'BC8_Saticfaction_of_income_tax_liability'
+	'get_BC8_Saticfaction_of_income_tax_liability'
   ]
   static schemas = {
     name: {
@@ -55,7 +81,7 @@ class TokenMain extends Contract {
   // --------------------BC6_Application---------------------------
   check_BC6_Application(address) {
     let check_BC6_Application = this.get_BC6_ApplicationByAddress(address)
-    if (!check_BC6_Application || check_BC6_Application.type !== 'ESTIMATED_QUARTERLY_FICA_AND_SECA_TAX_COLLECTIONS_AND_LIABILITIES') throw `ESTIMATED_QUARTERLY_FICA_AND_SECA_TAX_COLLECTIONS_AND_LIABILITIES IS NOT EXIST`
+    if (!check_BC6_Application || check_BC6_Application.type !== 'BC6_APPLICATION') throw `BC6_APPLICATION IS NOT EXIST`
     return true
   }
   get_BC6_ApplicationByAddress(address) {
@@ -72,8 +98,8 @@ class TokenMain extends Contract {
   }
   // --------------------BC5_Taxable_income---------------------------
   check_BC5_Taxable_income(address) {
-    let check_BC6_Application = this.get_BC5_Taxable_incomeByAddress(address)
-    if (!check_BC6_Application || check_BC6_Application.type !== 'ESTIMATED_QUARTERLY_FICA_AND_SECA_TAX_COLLECTIONS_AND_LIABILITIES') throw `ESTIMATED_QUARTERLY_FICA_AND_SECA_TAX_COLLECTIONS_AND_LIABILITIES IS NOT EXIST`
+    let check_BC5_Taxable_income = this.get_BC5_Taxable_incomeByAddress(address)
+    if (!check_BC5_Taxable_income || check_BC5_Taxable_income.type !== 'BC5_TAXABLE_INCOME') throw `BC5_TAXABLE_INCOME IS NOT EXIST`
     return true
   }
   get_BC5_Taxable_incomeByAddress(address) {
