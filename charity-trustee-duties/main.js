@@ -10,7 +10,6 @@ class TokenMain extends Contract {
     'get_Consent_not_given',
     'get_Consent_given',
     'get_Make_changes_in_line_with_governing_documents_and_OSCR_consent',
-    'Do_not_need_our_consent',
     'get_Make_changes_in_line_with_governing_document',
     'get_Make_changes_in_line_with_governing_documents_and_OSCR_consent_or_with_governing_document',
   ]
@@ -32,17 +31,24 @@ class TokenMain extends Contract {
   static publicFuncs = [
     'User',
     'Your_governing_document_have_the_power_to_make_changes',
+    'get_Your_governing_document_have_no_the_power_to_make_changes',
     'Your_governing_document_have_no_the_power_to_make_changes',
     'Need_our_consent',
+    'get_Need_our_consent',
     'Need_to_reorganise',
     'Apply_to_us_for_consent_to_make_changes',
+    'get_Apply_to_us_for_consent_to_make_changes',
     'Consent_not_given',
+    'get_Consent_not_given',
     'Do_not_make_any_change',
     'Consent_given',
     'Make_changes_in_line_with_governing_documents_and_OSCR_consent',
+    'get_Make_changes_in_line_with_governing_documents_and_OSCR_consent',
     'Do_not_need_our_consent',
     'Make_changes_in_line_with_governing_document',
+    'get_Make_changes_in_line_with_governing_document',
     'Make_changes_in_line_with_governing_documents_and_OSCR_consent_or_with_governing_document',
+    'get_Make_changes_in_line_with_governing_documents_and_OSCR_consent_or_with_governing_document',
     'Notify_within_3_months'
   ]
   static schemas = {
