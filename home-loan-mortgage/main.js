@@ -230,7 +230,7 @@ class TokenMain extends Contract {
   }
   // --------------------Custodian_no_01---------------------------
   check_Custodian_no_01(address) {
-    let check_Custodian_no_01= this.get_ACustodian_no_01ByAddress(address)
+    let check_Custodian_no_01 = this.get_ACustodian_no_01ByAddress(address)
     if (!check_Custodian_no_01 || check_Custodian_no_01.type !== 'CUSTODIAN_NO_01') throw `CUSTODIAN_NO_01 IS NOT EXIST`
     return true
   }
