@@ -201,15 +201,15 @@ class TokenMain extends Contract {
   }
   async Check_Register() {
     await this.checK_Process(this.sender, 'USER_REGISTRATION_OR_USER_REGISTRATION')
-    let Check_Register = await this._stage.createStage('CHECK_REGISTER')
+    let Check_Register = await this._process.createProcess('CHECK_REGISTER')
     return Check_Register
   }
   get_Check_Register() {
     return this._process.getProcessByType('CHECK_REGISTER')
   }
-  async Login(address_Do_not_Registered) {
+  async Login(address_Check_Register) {
     this._user.checkUser(this.sender, 'USER')
-    let check_Check_Register = this._process.getProcessByAddress(address_Do_not_Registered)
+    let check_Check_Register = this._process.getProcessByAddress(address_Check_Register)
     if (!check_Check_Register || check_Check_Register.type !== 'CHECK_REGISTER')
       throw 'CHECK_REGISTER IS NOT EXIST'
     let Login = await this._process.createProcess('LOGIN')
@@ -224,7 +224,7 @@ class TokenMain extends Contract {
     this.check_View_Search_items = this.get_View_Search_itemsByAddress(address);
     this.check_Add_Item_to_Cart = this.get_Add_Item_to_CartByAddress(address);
     this.check_Display_Cart_Contents = this.get_Display_Cart_ContentsByAddress(address);
-    this.check_Change_Item_Quantities = this.getChange_Item_QuantitiesByAddress(address);
+    this.check_Change_Item_Quantities = this.get_Change_Item_QuantitiesByAddress(address);
     this.check_Checkout = this.get_CheckoutByAddress(address);
     this.check_View_Account_Statust = this.get_View_Account_StatusByAddress(address);
     if (this.check_Login.type == 'LOGIN') {
@@ -254,7 +254,7 @@ class TokenMain extends Contract {
   }
   async Check_Shop() {
     await this.checK_Process1(this.sender, 'LOGIN_OR_VIEW_SEARCH_ITEMS_ORADD_ITEM_TO_CART_OR_DISPLAY_CART_CONTENTS_OR_CHANGE_ITEM_QUANTITIES_OR_CHECK_OUT_OR_VIEW_ACCOUNT_STATUS_FOR_CHECK')
-    let Check_Shop = await this._stage.createStage('LOGIN_OR_VIEW_SEARCH_ITEMS_ORADD_ITEM_TO_CART_OR_DISPLAY_CART_CONTENTS_OR_CHANGE_ITEM_QUANTITIES_OR_CHECK_OUT_OR_VIEW_ACCOUNT_STATUS')
+    let Check_Shop = await this._process.createProcess('LOGIN_OR_VIEW_SEARCH_ITEMS_ORADD_ITEM_TO_CART_OR_DISPLAY_CART_CONTENTS_OR_CHANGE_ITEM_QUANTITIES_OR_CHECK_OUT_OR_VIEW_ACCOUNT_STATUS')
     return Check_Shop
   }
   get_Check_Shop() {
@@ -300,7 +300,7 @@ class TokenMain extends Contract {
     let View_Account_Status = await this._process.createProcess('VIEW_ACCOUNT_STATUS')
     return View_Account_Status
   }
-  get_View_Account_Statuss() {
+  get_View_Account_Status() {
     return this._process.getProcessByType('VIEW_ACCOUNT_STATUS')
   }
   // --------------------Logout--------------------------- 
@@ -341,7 +341,7 @@ class TokenMain extends Contract {
     if (!check_View_Search_items || check_View_Search_items.type !== 'VIEW_SEARCH_ITEMS') throw `VIEW_SEARCH_ITEMS IS NOT EXIST`
     return true
   }
-  get_View_Search_itemsByAddress(address) {
+  get_Add_Item_to_CartByAddress(address) {
     return this.accounts.find(account => account.address === address)
   }
   async Add_Item_to_Cart(address_View_Search_items) {
@@ -364,11 +364,11 @@ class TokenMain extends Contract {
   get_Display_Cart_ContentsByAddress(address) {
     return this.accounts.find(account => account.address === address)
   }
-  async Display_Cart_Contents(address_View_Search_items) {
+  async Display_Cart_Contents(address_Add_Item_to_Cart) {
     this._user.checkUser(this.sender, 'USER')
-    let checkView_Search_items = this._process.getProcessByAddress(address_View_Search_items)
-    if (!checkView_Search_items || checkView_Search_items.type !== 'VIEW_SEARCH_ITEMS')
-      throw 'VIEW_SEARCH_ITEMS IS NOT EXIST'
+    let checkAdd_Item_to_Cart = this._process.getProcessByAddress(address_Add_Item_to_Cart)
+    if (!checkAdd_Item_to_Cart || checkAdd_Item_to_Cart.type !== 'ADD_ITEM_TO_CART')
+      throw 'ADD_ITEM_TO_CART IS NOT EXIST'
     let Display_Cart_Contents = await this._process.createProcess('DISPLAY_CART_CONTENTS')
     return Display_Cart_Contents
   }
@@ -376,6 +376,14 @@ class TokenMain extends Contract {
     return this._process.getProcessByType('DISPLAY_CART_CONTENTS')
   }
   // --------------------Change_Cart_Items--------------------------- 
+  check_Change_Cart_Items(address) {
+    let check_Change_Cart_Items = this.get_Change_Cart_ItemsByAddress(address)
+    if (!check_Change_Cart_Items || check_Change_Cart_Items.type !== 'CHANGE_CART_ITEMS') throw `CHANGE_CART_ITEMS IS NOT EXIST`
+    return true
+  }
+  get_Change_Cart_ItemsByAddress(address) {
+    return this.accounts.find(account => account.address === address)
+  }
   async Change_Cart_Items(address_Display_Cart_Contents) {
     this._user.checkUser(this.sender, 'USER')
     let checkDisplay_Cart_Contents = this._process.getProcessByAddress(address_Display_Cart_Contents)
@@ -443,7 +451,7 @@ class TokenMain extends Contract {
   }
   async Change_Cart_Items_or_Change_Item_Quantities() {
     await this.checkProcess2(this.sender, 'CHANGE_CART_ITEMS_OR_CHANGE_ITEM_QUANTITIES_FOR_CHECK')
-    let process2 = await this._stage.createStage('CHANGE_CART_ITEMS_OR_CHANGE_ITEM_QUANTITIES')
+    let process2 = await this._process.createProcess('CHANGE_CART_ITEMS_OR_CHANGE_ITEM_QUANTITIES')
     return process2
   }
   get_Change_Cart_Items_or_Change_Item_Quantities() {
@@ -484,7 +492,7 @@ class TokenMain extends Contract {
   }
   async Checkout_or_No_Approved() {
     await this.checkProcess3(this.sender, 'CHECK_OUT_OR_NO_APPROVED_FOR_CHECK')
-    let process3 = await this._stage.createStage('CHECK_OUT_OR_NO_APPROVED')
+    let process3 = await this._process.createProcess('CHECK_OUT_OR_NO_APPROVED')
     return process3
   }
   get_Checkout_or_No_Approved() {
@@ -502,7 +510,15 @@ class TokenMain extends Contract {
     return this._process.getProcessByType('SHOPPING_CART')
   }
   // --------------------Payment_Info_to_Merchant--------------------------- 
-  async View_Search_items(address_Shopping_Cart) {
+  check_Payment_Info_to_Merchant(address) {
+    let check_Payment_Info_to_Merchant = this.get_Payment_Info_to_MerchantByAddress(address)
+    if (!check_Payment_Info_to_Merchant || check_Payment_Info_to_Merchant.type !== 'PAYMENT_INFO_TO_MERCHANT') throw `PAYMENT_INFO_TO_MERCHANT IS NOT EXIST`
+    return true
+  }
+  get_Payment_Info_to_MerchantByAddress(address) {
+    return this.accounts.find(account => account.address === address)
+  }
+  async Payment_Info_to_Merchant(address_Shopping_Cart) {
     this._user.checkUser(this.sender, 'USER')
     let check_Shopping_Cart = this._process.getProcessByAddress(address_Shopping_Cart)
     if (!check_Shopping_Cart || check_Shopping_Cart.type !== 'SHOPPING_CART')
@@ -553,7 +569,7 @@ class TokenMain extends Contract {
   async Shipping_and_Handling(address_Online_Payment_Integration) {
     this._user.checkUser(this.sender, 'USER')
     let check_Online_Payment_Integration = this._process.getProcessByAddress(address_Online_Payment_Integration)
-    if (!check_Online_Payment_Integration || check_Payment_Info_to_Merchant.type !== 'ONLINE_PAYMENT_INTEGRATIION')
+    if (!check_Online_Payment_Integration || check_Online_Payment_Integration.type !== 'ONLINE_PAYMENT_INTEGRATIION')
       throw 'ONLINE_PAYMENT_INTEGRATIION IS NOT EXIST'
     let Shipping_and_Handling = await this._process.createProcess('SHIPPING_AND_HANDLING')
     return Shipping_and_Handling
@@ -562,7 +578,7 @@ class TokenMain extends Contract {
     return this._process.getProcessByType('SHIPPING_AND_HANDLING')
   }
   // --------------------Order_Confirmation--------------------------- 
-  async No_Approved(address_Shipping_and_Handling) {
+  async Order_Confirmation(address_Shipping_and_Handling) {
     this._user.checkUser(this.sender, 'USER')
     let check_Shipping_and_Handling = this._process.getProcessByAddress(address_Shipping_and_Handling)
     if (!check_Shipping_and_Handling || check_Shipping_and_Handling.type !== 'SHIPPING_AND_HANDLING')
