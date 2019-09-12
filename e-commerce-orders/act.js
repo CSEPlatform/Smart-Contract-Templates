@@ -1,6 +1,6 @@
 import Contract from 'Contract'
-class Process extends Contract {
-  async createProcess (type) {
+class Act extends Contract {
+  async createAct (type) {
     const address = await this.generateAddress()
     console.log({ address })
     let rs = {
@@ -11,15 +11,15 @@ class Process extends Contract {
     this.accounts.push(rs)
     return address
   }
-  async addProcess (type) {
-    let address = await this.createProcess(type)
+  async addAct (type) {
+    let address = await this.createAct(type)
     this.setToAddress(address)
     return { type: address }
   }
-  getProcessByAddress (address) {
+  getActByAddress (address) {
     return this.accounts.find(account => account.address === address)
   }
-  getProcessByType (type) {
+  getActByType (type) {
     let lists = []
     this.accounts.find(account => {
       if (account.type === type) lists.push(account)
@@ -27,4 +27,4 @@ class Process extends Contract {
     return lists
   }
 }
-export default Process;
+export default Act;
