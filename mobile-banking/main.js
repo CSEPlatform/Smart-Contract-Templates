@@ -3,14 +3,20 @@ import Process from './process'
 import User from './user'
 class TokenMain extends Contract {
   static viewFuncs = [
-
+    'get_User',
+    'get_Registration',
+    'get_Registration_Details_Correct',
+    'get_Registration_Details_Incorrect',
+    'get_Register_Successfully',
+    'get_Login_or_Register_Successfully',
+    'get_Enter_your_BVN_and_Scan_finger_and_trasmit_to_server ',
+    'get_User_Credentials_Verified',
+    'get_Access_Bank_Services',
+    'get_User_Credentials_have_not_been_verified',
+    'get_Alert_Customer_Emergency_Number_and_Redirect_to_honneypot',
+    'get_Condition_Exit',
   ]
   static authenticationFuncs = [
-
-  ]
-  static publicFuncs = [
-    'User',
-    'get_User',
     'Registration',
     'Registration_Details_Correct',
     'Registration_Details_Incorrect',
@@ -22,6 +28,32 @@ class TokenMain extends Contract {
     'User_Credentials_have_not_been_verified',
     'Alert_Customer_Emergency_Number_and_Redirect_to_honneypot',
     'Condition_Exit',
+  ]
+  static publicFuncs = [
+    'User',
+    'get_User',
+    'Registration',
+    'get_Registration',
+    'Registration_Details_Correct',
+    'get_Registration_Details_Correct',
+    'Registration_Details_Incorrect',
+    'get_Registration_Details_Incorrect',
+    'Register_Successfully',
+    'get_Register_Successfully',
+    'Login_or_Register_Successfully',
+    'get_Login_or_Register_Successfully',
+    'Enter_your_BVN_and_Scan_finger_and_trasmit_to_server ',
+    'get_Enter_your_BVN_and_Scan_finger_and_trasmit_to_server',
+    'User_Credentials_Verified',
+    'get_User_Credentials_Verified',
+    'Access_Bank_Services',
+    'get_Access_Bank_Services',
+    'User_Credentials_have_not_been_verified',
+    'get_User_Credentials_have_not_been_verified',
+    'Alert_Customer_Emergency_Number_and_Redirect_to_honneypot',
+    'get_Alert_Customer_Emergency_Number_and_Redirect_to_honneypot',
+    'Condition_Exit',
+    'get_Condition_Exit',
     'Exit'
   ]
   static schemas = {
@@ -271,9 +303,6 @@ class TokenMain extends Contract {
       throw 'CONDITION_EXIT IS NOT EXIST'
     this.setToaddress(Exit.address)
     return 'Exit'
-  }
-  get_Exit() {
-    return this._process.getProcessByType('EXIT')
   }
 }
 export default TokenMain;

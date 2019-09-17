@@ -21,8 +21,6 @@ class TokenMain extends Contract {
     'get_Purchase_Product_from_Retailer',
     'get_Product_sold_to_customer',
     'get_Ships_Goods_to_Customer',
-    
-
   ]
   static authenticationFuncs = [
    
@@ -43,12 +41,8 @@ class TokenMain extends Contract {
     'Product_sold_to_customer_or_PO_Receipt_on_Verification_of_Token',
     'Sales_Order_Generated_for_Retailer_or_check_Receive_PO_and_verify_Tag',
     'Receipt_and_Verify_the_Product_and_track_history_using_Token'
-
   ]
   static publicFuncs = [
-
-
-
     'create_Wholesaler',
     'get_Wholesaler',
     'create_Retailer',
@@ -88,8 +82,6 @@ class TokenMain extends Contract {
     'Ships_Goods_to_Customer',
     'get_Ships_Goods_to_Customer',
     'Receipt_and_Verify_the_Product_and_track_history_using_Token'
-
-
   ]
   static schemas = {
     name: {
@@ -131,7 +123,6 @@ class TokenMain extends Contract {
     let Retailer = this._user.getUserByType('RETAILER')
     return Retailer
   }
-
   async create_Customer() {
     let Customer = await this._user.createUser('CUSTOMER')
     return Customer
@@ -148,12 +139,7 @@ class TokenMain extends Contract {
     let Manufacturer = this._user.getUserByType('MANUFACTURER')
     return Manufacturer
   }
-
-
-
   // --------------------Place_PO_on_Manufacturer---------------------------
- 
-
   async Place_PO_on_Manufacturer() {
     await this._user.checkUser(this.sender, 'WHOLESALER')
     let good = await this._stage.createStage('PLACE_PO_ON_MANUFACTURER')
@@ -162,10 +148,7 @@ class TokenMain extends Contract {
   get_Place_PO_on_Manufacturer() {
     return this._stage.getStageByType('PLACE_PO_ON_MANUFACTURER')
   }
-
-  // --------------------Create_WO---------------------------
-
-
+  // --------------------Create_WO--------------------------
   async Create_WO(address_Place_PO_on_Manufacturer) {
     this._user.checkUser(this.sender, 'MANUFACTURER')
     let check_Place_PO_on_Manufacturer = this._stage.getStageByAddress(address_Place_PO_on_Manufacturer)
@@ -173,17 +156,11 @@ class TokenMain extends Contract {
       throw 'PLACE_PO_ON_MANUFACTURER IS NOT EXIST'
     let Create_WO = await this._stage.createStage('CREATE_WO')
     return Create_WO
-
   }
-
   get_Create_WO() {
     return this._stage.getStageByType('CREATE_WO')
   }
-
-
   // --------------------Manufacturer_Goods---------------------------
-
-
   async Manufacturer_Goods(address_Create_WO) {
     this._user.checkUser(this.sender, 'MANUFACTURER')
     let check_Create_WO = this._stage.getStageByAddress(address_Create_WO)
@@ -191,14 +168,11 @@ class TokenMain extends Contract {
       throw 'CREATE_WO IS NOT EXIST'
     let Manufacturer_Goods = await this._stage.createStage('MANUFACTURER_GOODS')
     return Manufacturer_Goods
-
   }
   get_Manufacturer_Goods() {
     return this._stage.getStageByType('MANUFACTURER_GOODS')
   }
-
   // --------------------Blockchain_Token_for_Finished_Good---------------------------
-
   async Blockchain_Token_for_Finished_Good(address_Manufacturer_Goods) {
     this._user.checkUser(this.sender, 'MANUFACTURER')
     let check_Manufacturer_Goods = this._stage.getStageByAddress(address_Manufacturer_Goods)
@@ -206,17 +180,11 @@ class TokenMain extends Contract {
       throw 'MANUFACTURER_GOODS IS NOT EXIST'
     let Blockchain_Token_for_Finished_Good = await this._stage.createStage('BLOCKCHAIN_TOKEN_FOR_FINISHED_GOOD')
     return Blockchain_Token_for_Finished_Good
-
   }
-
   get_Blockchain_Token_for_Finished_Good() {
     return this._stage.getStageByType('BLOCKCHAIN_TOKEN_FOR_FINISHED_GOOD')
   }
-
   // --------------------Order_Fulfillment_ship_the_goods_with_Generated_Token---------------------------
-
-
-
   async Order_Fulfillment_ship_the_goods_with_Generated_Token(address_Blockchain_Token_for_Finished_Good) {
     this._user.checkUser(this.sender, 'MANUFACTURER')
     let check_Blockchain_Token_for_Finished_Good = this._stage.getStageByAddress(address_Blockchain_Token_for_Finished_Good)
@@ -224,9 +192,7 @@ class TokenMain extends Contract {
       throw 'BLOCKCHAIN_TOKEN_FOR_FINISHED_GOOD IS NOT EXIST'
     let Order_Fulfillment_ship_the_goods_with_Generated_Token = await this._stage.createStage('ORDER_FULFILLMENT_SHIP_THE_GOODS_WITH_GENERATED_TOKEN')
     return Order_Fulfillment_ship_the_goods_with_Generated_Token
-
   }
-
   get_Order_Fulfillment_ship_the_goods_with_Generated_Token() {
     return this._stage.getStageByType('ORDER_FULFILLMENT_SHIP_THE_GOODS_WITH_GENERATED_TOKEN')
   }
@@ -246,26 +212,19 @@ class TokenMain extends Contract {
       throw 'ORDER_FULFILLMENT_SHIP_THE_GOODS_WITH_GENERATED_TOKEN IS NOT EXIST'
     let Receive_PO_and_verify_Tag = await this._stage.createStage('RECEIVE_PO_AND_VERIFY_TAG')
     return Receive_PO_and_verify_Tag
-
   }
-
   get_Receive_PO_and_verify_Tag() {
     return this._stage.getStageByType('RECEIVE_PO_AND_VERIFY_TAG')
   }
-
   // --------------------Place_PO_on_wholesaler---------------------------
- 
   async Place_PO_on_wholesaler() {
     await this._user.checkUser(this.sender, 'RETAILER')
     let Place_PO_on_wholesaler = await this._stage.createStage('PLACE_PO_ON_WHOLESALER')
     return Place_PO_on_wholesaler
   }
-
   get_Place_PO_on_wholesaler() {
     return this._stage.getStageByType('PLACE_PO_ON_WHOLESALER')
   }
-
-
   // --------------------Sales_Order_Generated_for_Ratailer---------------------------
   check_Sales_Order_Generated_for_Retailer(address) {
     let check_Sales_Order_Generated_for_Retailer = this.get_Sales_Order_Generated_for_RetailerByAddress(address)
@@ -282,14 +241,11 @@ class TokenMain extends Contract {
       throw 'PLACE_PO_ON_WHOLESALER IS NOT EXIST'
     let Sales_Order_Generated_for_Retailer = await this._stage.createStage('SALES_ORDER_GENERATED_FOR_RETAILER')
     return Sales_Order_Generated_for_Retailer
-
   }
-
   get_Sales_Order_Generated_for_Retailer() {
     return this._stage.getStageByType('SALES_ORDER_GENERATED_FOR_RETAILER')
   }
   // --------------------Fulfillment_of_Sales_Order_Shipment_to_Retailer---------------------------
- 
    checkSale(address) {
     this.check_Sales_Order_Generated_for_Retailer = this.get_Sales_Order_Generated_for_RetailerByAddress(address);
     this.check_Receive_PO_and_verify_Tag = this.get_Receive_PO_and_verify_TagByAddress(address);
@@ -302,16 +258,13 @@ class TokenMain extends Contract {
     }
     else {
       throw `SALES_ORDER_GENERATED_FOR_RETAILER_OR_RECEIVE_PO_AND_VERIFY_TAG_OF_SALE IS NOT EXIST`;
-
     }
-
   }
   async Sales_Order_Generated_for_Retailer_or_check_Receive_PO_and_verify_Tag() {
     await this.checkSale(this.sender, 'SALES_ORDER_GENERATED_FOR_RETAILER_OR_RECEIVE_PO_AND_VERIFY_TAG_OF_SALE')
     let Sales_Order_Generated_for_Retailer_or_check_Receive_PO_and_verify_Tag = await this._stage.createStage('SALES_ORDER_GENERATED_FOR_RETAILER_OR_RECEIVE_PO_AND_VERIFY_TAG')
     return Sales_Order_Generated_for_Retailer_or_check_Receive_PO_and_verify_Tag
   }
-
   async Fulfillment_of_Sales_Order_Shipment_to_Retailer(address_Sales_Order_Generated_for_Retailer_or_check_Receive_PO_and_verify_Tag) {
     this._user.checkUser(this.sender, 'WHOLESALER')
     let checkSales_Order_Generated_for_Retailer_or_check_Receive_PO_and_verify_Tag = this._stage.getStageByAddress(address_Sales_Order_Generated_for_Retailer_or_check_Receive_PO_and_verify_Tag)
@@ -320,13 +273,10 @@ class TokenMain extends Contract {
     let Fulfillment_of_Sales_Order_Shipment_to_Retailer = await this._stage.createStage('FULFILLMENT_OF_SALES_ORDER_SHIPMENT_TO_RETAILER')
     return Fulfillment_of_Sales_Order_Shipment_to_Retailer
   }
-
   get_Fulfillment_of_Sales_Order_Shipment_to_Retailer() {
     return this._stage.getStageByType('FULFILLMENT_OF_SALES_ORDER_SHIPMENT_TO_RETAILER')
   }
-
   // --------------------Change_of_ownership_and_tranfer_for_Token_to_Retailer---------------------------
-
   async Change_of_ownership_and_tranfer_for_Token_to_Retailer(address_Fulfillment_of_Sales_Order_Shipment_to_Retailer) {
     this._user.checkUser(this.sender, 'WHOLESALER')
     let checkFulfillment_of_Sales_Order_Shipment_to_Retailer = this._stage.getStageByAddress(address_Fulfillment_of_Sales_Order_Shipment_to_Retailer)
@@ -335,11 +285,9 @@ class TokenMain extends Contract {
     let Change_of_ownership_and_tranfer_for_Token_to_Retailer = await this._stage.createStage('CHANGE_OF_OWNERSHIP_AND_TRANFER_FOR_TOKEN_TO_RETAILER')
     return Change_of_ownership_and_tranfer_for_Token_to_Retailer
   }
-
   get_Change_of_ownership_and_tranfer_for_Token_to_Retailer() {
     return this._stage.getStageByType('CHANGE_OF_OWNERSHIP_AND_TRANFER_FOR_TOKEN_TO_RETAILER')
   }
-
   // --------------------PO_Receipt_on_Verification_of_Token---------------------------
   check_PO_Receipt_on_Verification_of_Token(address) {
     let check_PO_Receipt_on_Verification_of_Token = this.get_PO_Receipt_on_Verification_of_TokenByAddress(address)
@@ -356,20 +304,16 @@ class TokenMain extends Contract {
       throw 'CHANGE_OF_OWNERSHIP_AND_TRANFER_FOR_TOKEN_TO_RETAILER IS NOT EXIST'
     let PO_Receipt_on_Verification_of_Token = await this._stage.createStage('PO_RECEIPT_ON_VERIFICATION_OF_TOKEN')
     return PO_Receipt_on_Verification_of_Token
-
   }
-
   get_PO_Receipt_on_Verification_of_Token() {
     return this._stage.getStageByType('PO_RECEIPT_ON_VERIFICATION_OF_TOKEN')
   }
   // --------------------Purchase_Product_from_Retailer---------------------------
- 
   async Purchase_Product_from_Retailer() {
     await this._user.checkUser(this.sender, 'CUSTOMER')
     let Purchase_Product_from_Retailer = await this._stage.createStage('PURCHASE_PRODUCT_FROM_RETAILER')
     return Purchase_Product_from_Retailer
   }
-
   get_Purchase_Product_from_Retailer() {
     return this._stage.getStageByType('PURCHASE_PRODUCT_FROM_RETAILER')
   }
@@ -389,14 +333,11 @@ class TokenMain extends Contract {
       throw 'PURCHASE_PRODUCT_FROM_RETAILER IS NOT EXIST'
     let Product_sold_to_customer = await this._stage.createStage('PRODUCT_SOLD_TO_CUSTOMER')
     return Product_sold_to_customer
-
   }
-
   get_Product_sold_to_customer() {
     return this._stage.getStageByType('PRODUCT_SOLD_TO_CUSTOMER')
   }
   // --------------------Ships_Goods_to_Customer---------------------------
- 
   checkShip(address) {
     this.check_Product_sold_to_customer = this.get_Product_sold_to_customerByAddress(address);
     this.check_PO_Receipt_on_Verification_of_Token = this.get_PO_Receipt_on_Verification_of_TokenByAddress(address);
@@ -410,7 +351,6 @@ class TokenMain extends Contract {
     else {
       throw `PRODUCT_SOLD_TO_CUSTOMER_OR_PO_RECEIPT_ON_VERIFICATION_OF_TOKEN_OF_SHIP IS NOT EXIST`;
     }
-
   }
   async Product_sold_to_customer_or_PO_Receipt_on_Verification_of_Token() {
     await this.checkShip(this.sender, 'SALES_ORDER_GENERATED_FOR_RETAILER_OR_RECEIVE_PO_AND_VERIFY_TAG_OF_SALE_OF_SHIP')
@@ -425,11 +365,9 @@ class TokenMain extends Contract {
     let Ships_Goods_to_Customer = await this._stage.createStage('SHIPS_GOODS_TO_CUSTOMER')
     return Ships_Goods_to_Customer
   }
-
   get_Ships_Goods_to_Customer() {
     return this._stage.getStageByType('SHIPS_GOODS_TO_CUSTOMER')
   }
-
   // --------------------Receipt_and_Verify_the_Product_and_track_history_using_Token---------------------------
  
   async Receipt_and_Verify_the_Product_and_track_history_using_Token(address_Ships_Goods_to_Customer) {
@@ -440,11 +378,6 @@ class TokenMain extends Contract {
     let Receipt_and_Verify_the_Product_and_track_history_using_Token = await this._stage.createStage('RECEIPT_AND_VERIFY_THE_PRODUCT_AND_TRACK_HISTORY')
     this.setToAddress(Receipt_and_Verify_the_Product_and_track_history_using_Token.address)
     return 'SUCCESS'
-
   }
-
-
-
-
 }
 export default TokenMain;

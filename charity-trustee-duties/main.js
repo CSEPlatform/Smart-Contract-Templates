@@ -20,7 +20,7 @@ class TokenMain extends Contract {
     'Need_to_reorganise',
     'Apply_to_us_for_consent_to_make_changes',
     'Consent_not_given',
-    'Do_not_make_any_change',
+    'Do_not_make_any_changes',
     'Consent_given',
     'Make_changes_in_line_with_governing_documents_and_OSCR_consent',
     'Do_not_need_our_consent',
@@ -30,21 +30,23 @@ class TokenMain extends Contract {
   ]
   static publicFuncs = [
     'User',
-    'Your_governing_document_have_the_power_to_make_changes',
-    'get_Your_governing_document_have_no_the_power_to_make_changes',
     'Your_governing_document_have_no_the_power_to_make_changes',
+    'get_Your_governing_document_have_no_the_power_to_make_changes',
+    'Need_to_reorganise',
+    'Your_governing_document_have_the_power_to_make_changes',
+    'get_Your_governing_document_have_the_power_to_make_changes',
     'Need_our_consent',
     'get_Need_our_consent',
-    'Need_to_reorganise',
     'Apply_to_us_for_consent_to_make_changes',
     'get_Apply_to_us_for_consent_to_make_changes',
     'Consent_not_given',
     'get_Consent_not_given',
-    'Do_not_make_any_change',
+    'Do_not_make_any_changes',
     'Consent_given',
     'Make_changes_in_line_with_governing_documents_and_OSCR_consent',
     'get_Make_changes_in_line_with_governing_documents_and_OSCR_consent',
     'Do_not_need_our_consent',
+    'get_Do_not_need_our_consent',
     'Make_changes_in_line_with_governing_document',
     'get_Make_changes_in_line_with_governing_document',
     'Make_changes_in_line_with_governing_documents_and_OSCR_consent_or_with_governing_document',
@@ -92,6 +94,27 @@ class TokenMain extends Contract {
   get_Your_governing_document_have_the_power_to_make_changes() {
     return this._act.getActByType('YOUR_GOVERNING_DOCUMENT_HAVE_THE_POWER_TO_MAKE_CHANGES')
   }
+  // --------------------Your_governing_document_have_no_the_power_to_make_changes---------------------------
+  async  Your_governing_document_have_no_the_power_to_make_changes() {
+    this._user.checkUser(this.sender, 'USER')
+    let have = await this._act.createAct('YOUR_GOVERNING_DOCUMENT_HAVE_NO_THE_POWER_TO_MAKE_CHANGES')
+    return have
+  }
+  get_Your_governing_document_have_no_the_power_to_make_changes() {
+    return this._act.getActByType('YOUR_GOVERNING_DOCUMENT_HAVE_NO_THE_POWER_TO_MAKE_CHANGES')
+  }
+  // --------------------Need_to_reorganise---------------------------
+  async Need_to_reorganise(address_Your_governing_document_have_no_the_power_to_make_changes) {
+    this._user.checkUser(this.sender, 'USER')
+    let check_Your_governing_document_have_no_the_power_to_make_changes = this._act.getActByAddress(address_Your_governing_document_have_no_the_power_to_make_changes)
+    if (!check_Your_governing_document_have_no_the_power_to_make_changes || check_Your_governing_document_have_no_the_power_to_make_changes.type !== 'YOUR_GOVERNING_DOCUMENT_HAVE_NO_THE_POWER_TO_MAKE_CHANGES')
+      throw 'YOUR_GOVERNING_DOCUMENT_HAVE_NO_THE_POWER_TO_MAKE_CHANGES IS NOT EXIST'
+    let Need_to_reorganise = await this._act.createAct('NEED_TO_REORGANISE')
+    return Need_to_reorganise
+  }
+  get_Need_to_reorganise() {
+    return this._act.getActByType('NEED_TO_REORGANISE')
+  }
   // --------------------Need_our_consent---------------------------
   check_Need_our_consent(address) {
     let check_Need_our_consent = this.get_Need_our_consentByAddress(address)
@@ -101,7 +124,7 @@ class TokenMain extends Contract {
   get_Need_our_consentByAddress(address) {
     return this.accounts.find(account => account.address === address)
   }
-  async  Need_our_consent(address_Your_governing_document_have_the_power_to_make_changes) {
+  async Need_our_consent(address_Your_governing_document_have_the_power_to_make_changes) {
     this._user.checkUser(this.sender, 'USER')
     let check_Your_governing_document_have_the_power_to_make_changes = this._act.getActByAddress(address_Your_governing_document_have_the_power_to_make_changes)
     if (!check_Your_governing_document_have_the_power_to_make_changes || check_Your_governing_document_have_the_power_to_make_changes.type !== 'YOUR_GOVERNING_DOCUMENT_HAVE_THE_POWER_TO_MAKE_CHANGES')
@@ -112,34 +135,12 @@ class TokenMain extends Contract {
   get_Need_our_consent() {
     return this._act.getActByType('NEED_OUR_CONSENT')
   }
-  // --------------------Your_governing_document_have_no_the_power_to_make_changes---------------------------
-  async  Your_governing_document_have_no_the_power_to_make_changes() {
-    this._user.checkUser(this.sender, 'USER')
-    let have = await this._act.createAct('YOUR_GOVERNING_DOCUMENT_HAVE_NO_THE_POWER_TO_MAKE_CHANGES  ')
-    return have
-  }
-  get_Your_governing_document_have_no_the_power_to_make_changes() {
-    return this._act.getActByType('YOUR_GOVERNING_DOCUMENT_HAVE_NO_THE_POWER_TO_MAKE_CHANGES')
-  }
-  // --------------------Need_to_reorganise---------------------------
-  async  Need_to_reorganise(address_Your_governing_document_have_no_the_power_to_make_changes) {
-    this._user.checkUser(this.sender, 'USER')
-    let check_Your_governing_document_have_no_the_power_to_make_changes = this._act.getActByAddress(address_Your_governing_document_have_no_the_power_to_make_changes)
-    if (!check_Your_governing_document_have_no_the_power_to_make_changes || check_Your_governing_document_have_no_the_power_to_make_changes.type !== 'YOUR_GOVERNING_DOCUMENT_HAVE_NO_THE_POWER_TO_MAKE_CHANGES')
-      throw 'YOUR_GOVERNING_DOCUMENT_HAVE_NO_THE_POWER_TO_MAKE_CHANGES IS NOT EXIST'
-    let Need_to_reorganise = await this._act.createAct('NEED_TO_REORGANISE')
-    this.setToAddress(Need_to_reorganise.address)
-    return { Need_to_reorganise }
-  }
-  get_Need_to_reorganise() {
-    return this._act.getActByType('NEED_TO_REORGANISE')
-  }
   // --------------------Apply_to_us_for_consent_to_make_changes---------------------------  
-  async Apply_to_us_for_consent_to_make_changes(address_Need_to_reorganise) {
+  async Apply_to_us_for_consent_to_make_changes(address_Need_our_consent) {
     this._user.checkUser(this.sender, 'USER')
-    let Check_Need_to_reorganise = this._act.getActByAddress(address_Need_to_reorganise)
-    if (!Check_Need_to_reorganise || Check_Need_to_reorganise.type !== 'NEED_TO_REORGANISE')
-      throw 'NEED_TO_REORGANISE IS NOT EXIST'
+    let Check_Need_our_consent = this._act.getActByAddress(address_Need_our_consent)
+    if (!Check_Need_our_consent || Check_Need_our_consent.type !== 'NEED_OUR_CONSENT')
+      throw 'NEED_OUR_CONSENT IS NOT EXIST'
     let Apply_to_us_for_consent_to_make_changes = await this._act.createAct('APPLY_TO_US_FOR_CONSENT_TO_MAKE_CHANGES')
     return Apply_to_us_for_consent_to_make_changes
   }
@@ -169,7 +170,7 @@ class TokenMain extends Contract {
   }
   // --------------------Consent_given--------------------------- 
   async Consent_given(address_Apply_to_us_for_consent_to_make_changes) {
-    this._process.checkProcess(this.sender, 'USER')
+    this._user.checkUser(this.sender, 'USER')
     let check_Apply_to_us_for_consent_to_make_changes = this._act.getActByAddress(address_Apply_to_us_for_consent_to_make_changes)
     if (!check_Apply_to_us_for_consent_to_make_changes || check_Apply_to_us_for_consent_to_make_changes.type !== 'APPLY_TO_US_FOR_CONSENT_TO_MAKE_CHANGES')
       throw 'APPLY_TO_US_FOR_CONSENT_TO_MAKE_CHANGES IS NOT EXIST'
@@ -189,7 +190,7 @@ class TokenMain extends Contract {
     return this.accounts.find(account => account.address === address)
   }
   async Make_changes_in_line_with_governing_documents_and_OSCR_consent(address_Consent_given) {
-    this._process.checkProcess(this.sender, 'USER')
+    this._user.checkUser(this.sender, 'USER')
     let check_Consent_given = this._act.getActByAddress(address_Consent_given)
     if (!check_Consent_given || check_Consent_given.type !== 'CONSENT_GIVEN')
       throw 'CONSENT_GIVEN IS NOT EXIST'
@@ -200,7 +201,7 @@ class TokenMain extends Contract {
     return this._act.getActByType('MAKE_CHANGES_IN_LINE_WITH_GOVERNING_DOCUMENTS_AND_OSCR_CONSENT')
   }
   // --------------------Do_not_need_our_consent---------------------------
-  async  Do_not_need_our_consent(address_Your_governing_document_have_the_power_to_make_changes) {
+  async Do_not_need_our_consent(address_Your_governing_document_have_the_power_to_make_changes) {
     this._user.checkUser(this.sender, 'USER')
     let check_Your_governing_document_have_the_power_to_make_changes = this._act.getActByAddress(address_Your_governing_document_have_the_power_to_make_changes)
     if (!check_Your_governing_document_have_the_power_to_make_changes || check_Your_governing_document_have_the_power_to_make_changes.type !== 'YOUR_GOVERNING_DOCUMENT_HAVE_THE_POWER_TO_MAKE_CHANGES')
@@ -236,10 +237,10 @@ class TokenMain extends Contract {
     this.check_Make_changes = this.get_Make_changes_in_line_with_governing_document_and_OSCR_consentByAddress(address);
     this.check_Make_changes2 = this.get_Make_changes_in_line_with_governing_documentByAddress(address);
 
-    if (this.check_Make_changes2.type == 'MAKE_CHANGES_IN_LINE_WITH_GOVERNING_DOCUMENTS_AND_OSCR_CONSENT') {
+    if (this.check_Make_changes.type == 'MAKE_CHANGES_IN_LINE_WITH_GOVERNING_DOCUMENTS_AND_OSCR_CONSENT') {
       return true;
     }
-    else if (this.check_Receive_PO_and_verify_Tag.type == 'MAKE_CHANGES_IN_LINE_WITH_GOVERNING_DOCUMENT') {
+    else if (this.check_Make_changes2.type == 'MAKE_CHANGES_IN_LINE_WITH_GOVERNING_DOCUMENT') {
       return true;
     }
     else {
@@ -248,8 +249,11 @@ class TokenMain extends Contract {
   }
   async Make_changes_in_line_with_governing_documents_and_OSCR_consent_or_with_governing_document() {
     await this.checkAct(this.sender, 'MAKE_CHANGES_IN_LINE_WITH_GOVERNING_DOCUMENTS_AND_OSCR_CONSENT_OR_WITH_GOVERNING_DOCUMENTIS_FOR_CHECK')
-    let act = await this._stage.createStage('MAKE_CHANGES_IN_LINE_WITH_GOVERNING_DOCUMENTS_AND_OSCR_CONSENT_OR_WITH_GOVERNING_DOCUMENTIS')
+    let act = await this._act.createAct('MAKE_CHANGES_IN_LINE_WITH_GOVERNING_DOCUMENTS_AND_OSCR_CONSENT_OR_WITH_GOVERNING_DOCUMENTIS')
     return act
+  }
+  get_Make_changes_in_line_with_governing_documents_and_OSCR_consent_or_with_governing_document() {
+    return this._act.getActByType('MAKE_CHANGES_IN_LINE_WITH_GOVERNING_DOCUMENTS_AND_OSCR_CONSENT_OR_WITH_GOVERNING_DOCUMENTIS')
   }
   async Notify_within_3_months(address_Make_changes_in_line_with_governing_document_and_OSCR_consent_or_with_governing_document) {
     this._user.checkUser(this.sender, 'USER')

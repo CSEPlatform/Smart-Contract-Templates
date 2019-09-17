@@ -120,13 +120,12 @@ class TokenMain extends Contract {
     this._user = new User(data)
     this._act = new Act(data)
   }
-
   //---------------------User------------------------------
   async User() {
     let user = await this._user.createUser('USER')
     return user
   }
-  get_USer() {
+  get_User() {
     let Iot_Device = this._user.getUserByType('IOT_DEVICE')
     return Iot_Device
   }

@@ -1,7 +1,7 @@
 import Contract from 'Contract'
 const types =['USER']
 class User extends Contract {
-  async createProcess(type) {
+  async createUser(type) {
     if (!types.includes(type)) throw 'CREATE USER FAIL'
     const address = await this.generateAddress()
     console.log({ address })
