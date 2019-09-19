@@ -1,1 +1,4 @@
-{"name":"MRS-Customer","main":"./main.js"}
+{
+  "name": "Contract",
+  "main": "./main.js"
+}

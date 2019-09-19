@@ -358,7 +358,7 @@ class TokenMain extends Contract {
     return this.accounts.find(account => account.address === address)
   }
   async Secure_storage_of_Master_backup_procedures() {
-    await this.check_Optimise_and_create_web_and_orther_derivatives(this.sender, 'OPTIMISE_AND_CREATE_WEB_AND_ORTHER_DERIVATIVES')
+    await this.check_Digital_Asset_Management(this.sender, 'DIGITAL_ASSET_MANAGE')
     let Secure_storage = await this._process.createProcess('SECURE_STORAGE_OF_MASTER_BACKUP_PROCEDURES')
     this.setToAddress(Secure_storage.address)
     return { Secure_storage }
@@ -390,7 +390,7 @@ class TokenMain extends Contract {
     return this.accounts.find(account => account.address === address)
   }
   async Access_via_web_catalogue() {
-    await this.check_Optimise_and_create_web_and_orther_derivatives(this.sender, 'OPTIMISE_AND_CREATE_WEB_AND_ORTHER_DERIVATIVES')
+    await this.check_Link_web_images_to_Metadata(this.sender, 'LINK_WEB_IMAGES_TO_METADATA')
     let access = await this._process.createProcess('ACCESS_VIA_WEB_CATALOGUE')
     this.setToAddress(access.address)
     return { access }

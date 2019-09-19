@@ -1,7 +1,7 @@
 import Contract from 'Contract'
 const types = ['USER']
-class Users extends Contract {
-  async createUsers (type) {
+class User extends Contract {
+  async createUser(type) {
     if (!types.includes(type)) throw 'CREATE USER FAIL'
     const address = await this.generateAddress()
     console.log({ address })
@@ -29,4 +29,4 @@ class Users extends Contract {
     return lists
   }
 }
-export default Users
+export default User
