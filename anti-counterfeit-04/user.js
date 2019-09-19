@@ -1,8 +1,8 @@
 import Contract from 'Contract'
-const types = ['ORTHER','DONATION','PASSIVE_INVESTMENT','ACTIVE_INVESTMENT']
-class Act extends Contract {
-  async createAct (type) {
-    if (!types.includes(type)) throw 'CREATE ACT FAIL'
+const types = ['USER']
+class User extends Contract {
+  async createUser (type) {
+    if (!types.includes(type)) throw 'CREATE USER FAIL'
     const address = await this.generateAddress()
     console.log({ address })
     let rs = {
@@ -13,15 +13,15 @@ class Act extends Contract {
     this.accounts.push(rs)
     return address
   }
-  checkAct(address, type) {
-    let checkAct= this.getActByAddress(address)
-    if (!checkAct || checkAct.type !== type) throw `${type} IS NOT EXIST`
+  checkUser (address, type) {
+    let checkUser = this.getUserByAddress(address)
+    if (!checkUser || checkUser.type !== type) throw `${type} IS NOT EXIST`
     return true
   }
-  getActByAddress (address) {
+  getUserByAddress (address) {
     return this.accounts.find(account => account.address === address)
   }
-  getActByType (type) {
+  getUserByType (type) {
     let lists = []
     this.accounts.find(account => {
       if (account.type === type) lists.push(account)
@@ -29,4 +29,4 @@ class Act extends Contract {
     return lists
   }
 }
-export default Act;
+export default User;
