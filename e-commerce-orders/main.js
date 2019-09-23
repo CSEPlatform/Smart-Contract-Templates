@@ -166,7 +166,7 @@ class TokenMain extends Contract {
     let check_Create_new_Order = this._act.getActByAddress(address_Create_new_Order)
     if (!check_Create_new_Order || check_Create_new_Order.type !== 'CREATE_NEW_ORDER')
       throw 'CREATE_NEW_ORDER IS NOT EXIST'
-    let Transaction1 = await this._act.createAct('PRODUCT_AND_ORDER')
+    let Transaction1 = await this._act.addAct('PRODUCT_AND_ORDER')
     this.setToAddress(Transaction1.address)
     return { Transaction1 }
   }
@@ -176,7 +176,7 @@ class TokenMain extends Contract {
     let check_Create_new_Order = this._act.getActByAddress(address_Create_new_Order)
     if (!check_Create_new_Order || check_Create_new_Order.type !== 'CREATE_NEW_ORDER')
       throw 'CREATE_NEW_ORDER IS NOT EXIST'
-    let Transaction2 = await this._act.createAct('ORDER_AND_CUSTOMER')
+    let Transaction2 = await this._act.addAct('ORDER_AND_CUSTOMER')
     this.setToAddress(Transaction2.address)
     return { Transaction2 }
   }
