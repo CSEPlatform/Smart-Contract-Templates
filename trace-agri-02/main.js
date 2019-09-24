@@ -1,10 +1,8 @@
 import Contract from 'Contract'
 import Product from './product'
 import Farm from './farm'
-
 class TokenMain extends Contract {
   static viewFuncs = [
-
     'getFarm',
     'getFactory',
     'getTransportation',
@@ -12,10 +10,8 @@ class TokenMain extends Contract {
     'getWarehouse',
     'getMarket',
     'getEnduser'
-
   ]
   static authenticationFuncs = [
-
     'addWashing',
     'addPacking',
     'addProcessing',
@@ -28,11 +24,8 @@ class TokenMain extends Contract {
     'createFactory',
     'getFactory',
     'addWashing',
-    //'getWashing',
     'addPacking',
-    //'getPacking',
     'addProcessing',
-    //'getProcessing',
     'createTransportation',
     'getTransportation',
     'createBorderCrossing',
@@ -43,8 +36,6 @@ class TokenMain extends Contract {
     'createMarket',
     'getMarket',
     'addEnduser'
-    //'getEnduser',
-
   ]
   static schemas = {
     name: {
@@ -70,7 +61,6 @@ class TokenMain extends Contract {
     this._farm = new Farm(data)
   }
   //---------------------FARM------------------------------
-
   async createFarm() {
     let farm = await this._farm.createFarm('FARM')
     return farm
@@ -79,16 +69,13 @@ class TokenMain extends Contract {
     let farm = this._farm.getFarmByType('FARM')
     return farm
   }
-
-
-  // --------------------FACTORY---------------------------
-  
-  checkFactory (address) {
+  // --------------------FACTORY--------------------------- 
+  checkFactory(address) {
     let checkFactory = this.getFactoryByAddress(address)
     if (!checkFactory || checkFactory.type !== 'FACTORY') throw `FACTORY IS NOT EXIST`
     return true
   }
-  getFactoryByAddress (address) {
+  getFactoryByAddress(address) {
     return this.accounts.find(account => account.address === address)
   }
   async createFactory() {
@@ -101,35 +88,29 @@ class TokenMain extends Contract {
     if (!checkFactory || checkFactory.type !== 'FACTORY') throw 'FACTORY IS NOT EXIST'
     let washing = await this._product.createProduct('WASHING')
     this.setToAddress(washing.address)
-    //return { washing }
     return 'ADD SUCCESS'
   }
   async addPacking() {
-
     let checkFactory = this._product.getProductByAddress(this.sender)
     if (!checkFactory || checkFactory.type !== 'FACTORY') throw 'FACTORY IS NOT EXIST'
     let Packing = await this._product.createProduct('PACKING')
     this.setToAddress(Packing.address)
-    //return { Packing }
     return 'ADD SUCCESS'
   }
-
   async addProcessing() {
-
     let checkFactory = this._product.getProductByAddress(this.sender)
     if (!checkFactory || checkFactory.type !== 'FACTORY') throw 'FACTORY IS NOT EXIST'
     let Processing = await this._product.createProduct('PROCESSING')
     this.setToAddress(Processing.address)
-    // return { Processing }
     return 'ADD SUCCESS'
   }
   // --------------------TRASPORTATION--------------------------
-  checkTransportation (address) {
+  checkTransportation(address) {
     let checkTransportation = this.getFactoryByAddress(address)
     if (!checkTransportation || checkTransportation.type !== 'TRANSPORTATION') throw `TRANSPORTATION IS NOT EXIST`
     return true
   }
-  getTransportationByAddress (address) {
+  getTransportationByAddress(address) {
     return this.accounts.find(account => account.address === address)
   }
   async createTransportation() {
@@ -137,14 +118,13 @@ class TokenMain extends Contract {
     let transportation = await this._product.createProduct('TRANSPORTATION')
     return transportation
   }
-
   // --------------------BORDERCROSSING---------------------------
-  checkBorderCrossing (address) {
+  checkBorderCrossing(address) {
     let checkBorderCrossing = this.getFactoryByAddress(address)
     if (!checkBorderCrossing || checkBorderCrossing.type !== 'BORDERCROSSING') throw `BORDERCROSSING IS NOT EXIST`
     return true
   }
-  getBorderCrossingByAddress (address) {
+  getBorderCrossingByAddress(address) {
     return this.accounts.find(account => account.address === address)
   }
   async createBorderCrossing() {
@@ -152,59 +132,50 @@ class TokenMain extends Contract {
     let bordercrossing = await this._product.createProduct('BORDERCROSSING')
     return bordercrossing
   }
-
-
   // --------------------WAREHOUSE---------------------------
-  checkWarehouse (address) {
+  checkWarehouse(address) {
     let checkWarehouse = this.getFactoryByAddress(address)
-    if (!checkWarehouse|| checkWarehouse.type !== 'WAREHOUSE') throw `WAREHOUSE IS NOT EXIST`
+    if (!checkWarehouse || checkWarehouse.type !== 'WAREHOUSE') throw `WAREHOUSE IS NOT EXIST`
     return true
   }
-  getWarehouseByAddress (address) {
+  getWarehouseByAddress(address) {
     return this.accounts.find(account => account.address === address)
   }
   async createWarehouse() {
     await this.checkBorderCrossing(this.sender, 'BORDERCROSSING')
-    let  warehouse= await this._product.createProduct('WAREHOUSE')
+    let warehouse = await this._product.createProduct('WAREHOUSE')
     return warehouse
   }
-  async addDistributioncenter(){
+  async addDistributioncenter() {
     let checkWarehouse = this._product.getProductByAddress(this.sender)
     if (!checkWarehouse || checkWarehouse.type !== 'WAREHOUSE') throw 'MARKET IS NOT EXIST'
     let distributioncenter = await this._product.createProduct('DISTRIBUTIONCENTER')
     this.setToAddress(distributioncenter.address)
-    // return { Enduser }
     return 'ADD SUCCESS'
   }
-
-   // --------------------MARKET---------------------------
-   checkMarket (address) {
+  // --------------------MARKET---------------------------
+  checkMarket(address) {
     let checkMarket = this.getFactoryByAddress(address)
     if (!checkMarket || checkMarket.type !== 'MARKET') throw `MARKET IS NOT EXIST`
     return true
   }
-  getMarketByAddress (address) {
+  getMarketByAddress(address) {
     return this.accounts.find(account => account.address === address)
   }
-   async createMarket() {
+  async createMarket() {
     await this.checkWarehouse(this.sender, 'WAREHOUSE')
-    let  market= await this._product.createProduct('MARKET')
+    let market = await this._product.createProduct('MARKET')
     return market
   }
-
-
   // --------------------END USER ---------------------------
   async addEnduser() {
     let checkMarket = this._product.getProductByAddress(this.sender)
     if (!checkMarket || checkMarket.type !== 'MARKET') throw 'MARKET IS NOT EXIST'
     let Enduser = await this._product.createProduct('ENDUSER')
     this.setToAddress(Enduser.address)
-    // return { Enduser }
     return 'SUCCESS'
   }
-
-
-//-------------------------Get----------------------------------
+  //-------------------------Get----------------------------------
   getFactory() {
     return this._product.getProductsByType('FACTORY')
   }
@@ -220,9 +191,5 @@ class TokenMain extends Contract {
   getMarket() {
     return this._product.getProductsByType('MARKET')
   }
-
-  
- 
-
 }
 export default TokenMain;

@@ -26,23 +26,23 @@ class TokenMain extends Contract {
   ]
   static publicFuncs = [
     'BC',
-	'get_BC',
+    'get_BC',
     'BC6_Application',
-	'get_BC6_Application',
+    'get_BC6_Application',
     'BC5_Taxable_income',
-	'get_BC5_Taxable_income',
+    'get_BC5_Taxable_income',
     'BC6_Application_or_BC5_Taxable_income',
-	'get_BC6_Application_or_BC5_Taxable_income',
+    'get_BC6_Application_or_BC5_Taxable_income',
     'Bacsic_tax_rate',
-	'get_Bacsic_tax_rate',
+    'get_Bacsic_tax_rate',
     'Equals',
-	'get_Equals',
+    'get_Equals',
     'BC6_Result_negative_income_tax_liability',
-	'get_BC6_Result_negative_income_tax_liability',
+    'get_BC6_Result_negative_income_tax_liability',
     'BC6_Result_positive_income_tax_liability',
-	'get_BC6_Result_positive_income_tax_liability'
+    'get_BC6_Result_positive_income_tax_liability'
     'BC6_Result_negative_or_positive_income_tax_liability',
-	'get_BC6_Result_negative_or_positive_income_tax_liability',
+    'get_BC6_Result_negative_or_positive_income_tax_liability',
     'BC8_Saticfaction_of_income_tax_liability'
 	'get_BC8_Saticfaction_of_income_tax_liability'
   ]

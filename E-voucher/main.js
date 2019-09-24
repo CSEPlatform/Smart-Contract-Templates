@@ -23,7 +23,6 @@ class TokenMain extends Contract {
     'get_Entry_Events_or_Post_Vouchers',
   ]
   static authenticationFuncs = [
-
     'Create_Control_Groups',
     'Enter_Vouchers',
     'Enter_Vouchers_or_Update_Vouchers',

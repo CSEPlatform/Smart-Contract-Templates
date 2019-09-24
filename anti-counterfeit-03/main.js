@@ -22,8 +22,7 @@ class TokenMain extends Contract {
     'get_Product_sold_to_customer',
     'get_Ships_Goods_to_Customer',
   ]
-  static authenticationFuncs = [
-   
+  static authenticationFuncs = [ 
     'Place_PO_on_Manufacturer',
     'Create_WO',
     'Manufacturer_Goods',
@@ -86,7 +85,7 @@ class TokenMain extends Contract {
   static schemas = {
     name: {
       type: String,
-      default: 'ANTI_COUNTERFEIT_SOLUTION'
+      default: 'ANTI_COUNTERFEIT_03'
     },
     accounts: [
       {
