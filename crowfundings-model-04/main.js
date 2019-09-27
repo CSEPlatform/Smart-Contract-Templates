@@ -6,6 +6,7 @@ class TokenMain extends Contract {
     'get_User',
     'get_Direct',
     'get_Indirect',
+    'get_Check_Investment_Type',
     'get_Investment_Type',
     'get_Expost',
     'get_Exante'
@@ -13,6 +14,7 @@ class TokenMain extends Contract {
   static authenticationFuncs = [
     'Direct',
     'Indirect',
+    'Check_Investment_Type',
     'Investment_Type',
     'Expost',
     'Exante'
@@ -24,6 +26,8 @@ class TokenMain extends Contract {
     'get_Direct',
     'Indirect',
     'get_Indirect',
+    'Check_Investment_Type',
+    'get_Check_Investment_Type',
     'Investment_Type',
     'get_Investment_Type',
     'Expost',
@@ -115,8 +119,11 @@ class TokenMain extends Contract {
   }
   async Check_Investment_Type() {
     await this.checkProcess(this.sender, 'DIRECT_OR_INDIRECT')
-    let check = await this._stage.createStage('CHECK_INVESTMENT_TYPE')
+    let check = await this._process.createProcess('CHECK_INVESTMENT_TYPE')
     return check
+  }
+  get_Check_Investment_Type() {
+    return this._process.getProcessByType('CHECK_INVESTMENT_TYPE')
   }
   async Investment_Type(address_Check_Investment_Type) {
     this._user.checkUser(this.sender, 'USER')

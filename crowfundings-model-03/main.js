@@ -68,8 +68,8 @@ class TokenMain extends Contract {
   async Direct(address_Type_of_Fundraising) {
     this._user.checkUser(this.sender, 'USER')
     let check_Type_of_Fundraising = this._process.getProcessByAddress(address_Type_of_Fundraising)
-    if (!check_Type_of_Fundraising || check_Type_of_Fundraising.type !== 'PROPOSE')
-      throw 'PROPOSE IS NOT EXIST'
+    if (!check_Type_of_Fundraising || check_Type_of_Fundraising.type !== 'TYPE_OF_FUNDRAISING')
+      throw 'TYPE_OF_FUNDRAISING IS NOT EXIST'
     let Direct = await this._process.createProcess('DIRECT')
     return Direct
   }
@@ -80,8 +80,8 @@ class TokenMain extends Contract {
   async Indirect(address_Type_of_Fundraising) {
     this._user.checkUser(this.sender, 'USER')
     let check_Type_of_Fundraising = this._process.getProcessByAddress(address_Type_of_Fundraising)
-    if (!check_Type_of_Fundraising || check_Type_of_Fundraising.type !== 'PROPOSE')
-      throw 'PROPOSE IS NOT EXIST'
+    if (!check_Type_of_Fundraising || check_Type_of_Fundraising.type !== 'TYPE_OF_FUNDRAISING')
+      throw 'TYPE_OF_FUNDRAISING IS NOT EXIST'
     let Indirect = await this._process.createProcess('INDIRECT')
     return Indirect
   }
