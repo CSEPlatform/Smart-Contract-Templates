@@ -36,7 +36,7 @@ class TokenMain extends Contract {
   static schemas = {
     name: {
       type: String,
-      default: 'ECOMMERCE-ORDERS'
+      default: 'ECOMMERCE-03'
     },
     accounts: [
       {
