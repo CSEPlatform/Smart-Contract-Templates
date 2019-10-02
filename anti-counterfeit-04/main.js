@@ -220,8 +220,8 @@ class TokenMain extends Contract {
   // --------------------Wait_for_pre_votes--------------------------- 
   checkProcess2(address) {
     this.check_Pre_commit_timed_out = this.get_Pre_commit_timed_outByAddress(address);
-    this.check_Pre_commit_invalid = this._act.get_Pre_commit_invalidByAddress(address);
-    this.check_Pre_commit_valid = this._act.get_Pre_commit_validByAddress(address);
+    this.check_Pre_commit_invalid = this.get_Pre_commit_invalidByAddress(address);
+    this.check_Pre_commit_valid = this.get_Pre_commit_validByAddress(address);
     if (this.check_Pre_commit_timed_out.type == 'PRE_COMMIT_TIMED_OUT') {
       return true;
     }
