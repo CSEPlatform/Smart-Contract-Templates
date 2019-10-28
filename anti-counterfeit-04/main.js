@@ -147,8 +147,8 @@ class TokenMain extends Contract {
   // --------------------Wait_for_pre_votes--------------------------- 
   checkProcess1(address) {
     this.check_Pre_vote_timed_out = this.get_Pre_vote_timed_outByAddress(address);
-    this.check_Pre_vote_invalid = this._act.get_Pre_vote_invalidByAddress(address);
-    this.check_Pre_vote_valid = this._act.get_Pre_vote_validByAddress(address);
+    this.check_Pre_vote_invalid = this.get_Pre_vote_invalidByAddress(address);
+    this.check_Pre_vote_valid = this.get_Pre_vote_validByAddress(address);
     if (this.check_Pre_vote_timed_out.type == 'PRE_VOTE_TIMED_OUT') {
       return true;
     }
