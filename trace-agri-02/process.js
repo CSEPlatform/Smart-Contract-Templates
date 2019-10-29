@@ -1,8 +1,6 @@
 import Contract from 'Contract'
-const types = ['FARM']
-class Farm extends Contract {
-  async createFarm (type) {
-    if (!types.includes(type)) throw 'CREATE FARM FAIL'
+class Process extends Contract {
+  async createProcess (type) {
     const address = await this.generateAddress()
     console.log({ address })
     let rs = {
@@ -13,15 +11,15 @@ class Farm extends Contract {
     this.accounts.push(rs)
     return address
   }
-  checkFarm (address, type) {
-    let checkFarm = this.getFarmByAddress(address)
-    if (!checkFarm || checkFarm.type !== type) throw `${type} IS NOT EXIST`
-    return true
+  async addProcess (type) {
+    let address = await this.createStage(type)
+    this.setToAddress(address)
+    return { type: address }
   }
-  getFarmByAddress (address) {
+  getProcessByAddress (address) {
     return this.accounts.find(account => account.address === address)
   }
-  getFarmByType (type) {
+  getProcessByType (type) {
     let lists = []
     this.accounts.find(account => {
       if (account.type === type) lists.push(account)
@@ -29,4 +27,4 @@ class Farm extends Contract {
     return lists
   }
 }
-export default Farm;
+export default Process;

@@ -1,46 +1,56 @@
 import Contract from 'Contract'
-import Product from './product'
-import Farm from './farm'
+import Process from './process'
+import User from './user'
 class TokenMain extends Contract {
   static viewFuncs = [
+    'getUser',
     'getFarm',
     'getFactory',
     'getTransportation',
     'getBorderCrossing',
     'getWarehouse',
     'getMarket',
-    'getEnduser'
+    'getEndUser'
   ]
   static authenticationFuncs = [
+    'Farm',
+    'Factory',
     'addWashing',
     'addPacking',
     'addProcessing',
+    'Transportation',
+    'BorderCrossing',
+    'WareHouse',
     'addDistributioncenter',
-    'addEnduser'
+    'Market',
+    'EndUser'
   ]
   static publicFuncs = [
-    'createFarm',
+    'User',
+    'getUser',
+    'Farm',
     'getFarm',
-    'createFactory',
+    'Factory',
     'getFactory',
     'addWashing',
     'addPacking',
     'addProcessing',
-    'createTransportation',
+    'Transportation',
     'getTransportation',
-    'createBorderCrossing',
+    'BorderCrossing',
     'getBorderCrossing',
-    'createWarehouse',
+    'WareHouse',
     'getWarehouse',
     'addDistributioncenter',
-    'createMarket',
+    'Market',
     'getMarket',
-    'addEnduser'
+    'EndUser',
+    'getEndUser'
   ]
   static schemas = {
     name: {
       type: String,
-      default: 'AGRI_FLOWCHART_SAMPLE'
+      default: 'TRACE-AGRI-02'
     },
     accounts: [
       {
@@ -57,139 +67,134 @@ class TokenMain extends Contract {
   }
   constructor(data) {
     super(data)
-    this._product = new Product(data)
-    this._farm = new Farm(data)
+    this._process = new Process(data)
+    this._user = new User(data)
+  }
+  //--------------------USER------------------------------
+  async User() {
+    let user = await this._user.createUser('USER')
+    return user
+  }
+  getUser() {
+    let user = this._user.getUserByType('USER')
+    return user
   }
   //---------------------FARM------------------------------
-  async createFarm() {
-    let farm = await this._farm.createFarm('FARM')
-    return farm
+  async Farm() {
+    await this._user.checkUser(this.sender, 'USER')
+    let Farm = await this._process.createProcess('FARM')
+    return Farm
   }
   getFarm() {
-    let farm = this._farm.getFarmByType('FARM')
-    return farm
+    return this._process.getProcessByType('FARM')
   }
   // --------------------FACTORY--------------------------- 
-  checkFactory(address) {
-    let checkFactory = this.getFactoryByAddress(address)
-    if (!checkFactory || checkFactory.type !== 'FACTORY') throw `FACTORY IS NOT EXIST`
-    return true
+  async Factory(address_Farm) {
+    this._user.checkUser(this.sender, 'USER')
+    let check_Farm = this._process.getProcessByAddress(address_Farm)
+    if (!check_Farm || check_Farm.type !== 'FARM')
+      throw 'FARM IS NOT EXIST'
+    let Factory = await this._process.createProcess('FACTORY')
+    return Factory
   }
-  getFactoryByAddress(address) {
-    return this.accounts.find(account => account.address === address)
+  getFactory() {
+    return this._process.getProcessByType('FACTORY')
   }
-  async createFactory() {
-    await this._farm.checkFarm(this.sender, 'FARM')
-    let factory = await this._product.createProduct('FACTORY')
-    return factory
-  }
-  async addWashing() {
-    let checkFactory = this._product.getProductByAddress(this.sender)
-    if (!checkFactory || checkFactory.type !== 'FACTORY') throw 'FACTORY IS NOT EXIST'
-    let washing = await this._product.createProduct('WASHING')
-    this.setToAddress(washing.address)
+  async addWashing(address_Factory) {
+    this._user.checkUser(this.sender, 'USER')
+    let check_Factory = this._process.getProcessByAddress(address_Factory)
+    if (!check_Factory || check_Factory.type !== 'FACTORY')
+      throw 'FACTORY IS NOT EXIST'
+    let addWashing = await this._process.createProcess('WASHING')
+    this.setToAddress(addWashing.address)
     return 'ADD SUCCESS'
   }
-  async addPacking() {
-    let checkFactory = this._product.getProductByAddress(this.sender)
-    if (!checkFactory || checkFactory.type !== 'FACTORY') throw 'FACTORY IS NOT EXIST'
-    let Packing = await this._product.createProduct('PACKING')
-    this.setToAddress(Packing.address)
+  async addPacking(address_Factory) {
+    this._user.checkUser(this.sender, 'USER')
+    let check_Factory = this._process.getProcessByAddress(address_Factory)
+    if (!check_Factory || check_Factory.type !== 'FACTORY')
+      throw 'FACTORY IS NOT EXIST'
+    let addPacking = await this._process.createProcess('PACKING')
+    this.setToAddress(addPacking.address)
     return 'ADD SUCCESS'
   }
-  async addProcessing() {
-    let checkFactory = this._product.getProductByAddress(this.sender)
-    if (!checkFactory || checkFactory.type !== 'FACTORY') throw 'FACTORY IS NOT EXIST'
-    let Processing = await this._product.createProduct('PROCESSING')
-    this.setToAddress(Processing.address)
+  async addProcessing(address_Factory) {
+    this._user.checkUser(this.sender, 'USER')
+    let check_Factory = this._process.getProcessByAddress(address_Factory)
+    if (!check_Factory || check_Factory.type !== 'FACTORY')
+      throw 'FACTORY IS NOT EXIST'
+    let addProcessing = await this._process.createProcess('PROCESSING')
+    this.setToAddress(addProcessing.address)
     return 'ADD SUCCESS'
   }
-  // --------------------TRASPORTATION--------------------------
-  checkTransportation(address) {
-    let checkTransportation = this.getFactoryByAddress(address)
-    if (!checkTransportation || checkTransportation.type !== 'TRANSPORTATION') throw `TRANSPORTATION IS NOT EXIST`
-    return true
-  }
-  getTransportationByAddress(address) {
-    return this.accounts.find(account => account.address === address)
-  }
-  async createTransportation() {
-    await this.checkFactory(this.sender, 'FACTORY')
-    let transportation = await this._product.createProduct('TRANSPORTATION')
+  // --------------------TRANSPORTATION--------------------------
+  async Transportation(address_Factory) {
+    this._user.checkUser(this.sender, 'USER')
+    let check_Factory = this._process.getProcessByAddress(address_Factory)
+    if (!check_Factory || check_Factory.type !== 'FACTORY')
+      throw 'FACTORY IS NOT EXIST'
+    let transportation = await this._process.createProcess('TRANSPORTATION')
     return transportation
   }
+  getTransportation() {
+    return this._process.getProcessByType('TRANSPORTATION')
+  }
   // --------------------BORDERCROSSING---------------------------
-  checkBorderCrossing(address) {
-    let checkBorderCrossing = this.getFactoryByAddress(address)
-    if (!checkBorderCrossing || checkBorderCrossing.type !== 'BORDERCROSSING') throw `BORDERCROSSING IS NOT EXIST`
-    return true
-  }
-  getBorderCrossingByAddress(address) {
-    return this.accounts.find(account => account.address === address)
-  }
-  async createBorderCrossing() {
-    await this.checkTransportation(this.sender, 'TRANSPORTATION')
-    let bordercrossing = await this._product.createProduct('BORDERCROSSING')
+  async BorderCrossing(address_Transportation) {
+    this._user.checkUser(this.sender, 'USER')
+    let check_Transportation = this._process.getProcessByAddress(address_Transportation)
+    if (!check_Transportation || check_Transportation.type !== 'TRANSPORTATION')
+      throw 'TRANSPORTATION IS NOT EXIST'
+    let bordercrossing = await this._process.createProcess('BORDERCROSSING')
     return bordercrossing
   }
+  getTransportation() {
+    return this._process.getProcessByType('BORDERCROSSING')
+  }
   // --------------------WAREHOUSE---------------------------
-  checkWarehouse(address) {
-    let checkWarehouse = this.getFactoryByAddress(address)
-    if (!checkWarehouse || checkWarehouse.type !== 'WAREHOUSE') throw `WAREHOUSE IS NOT EXIST`
-    return true
-  }
-  getWarehouseByAddress(address) {
-    return this.accounts.find(account => account.address === address)
-  }
-  async createWarehouse() {
-    await this.checkBorderCrossing(this.sender, 'BORDERCROSSING')
-    let warehouse = await this._product.createProduct('WAREHOUSE')
+  async WareHouse(address_BorderCrossing) {
+    this._user.checkUser(this.sender, 'USER')
+    let check_BorderCrossing = this._process.getProcessByAddress(address_BorderCrossing)
+    if (!check_BorderCrossing || check_BorderCrossing.type !== 'BORDERCROSSING')
+      throw 'BORDERCROSSING IS NOT EXIST'
+    let warehouse = await this._process.createProcess('WAREHOUSE')
     return warehouse
   }
-  async addDistributioncenter() {
-    let checkWarehouse = this._product.getProductByAddress(this.sender)
-    if (!checkWarehouse || checkWarehouse.type !== 'WAREHOUSE') throw 'MARKET IS NOT EXIST'
-    let distributioncenter = await this._product.createProduct('DISTRIBUTIONCENTER')
+  getWareHouse() {
+    return this._process.getProcessByType('WAREHOUSE')
+  }
+  async addDistributioncenter(address_Warehouse) {
+    this._user.checkUser(this.sender, 'USER')
+    let check_Warehouse = this._process.getProcessByAddress(address_Warehouse)
+    if (!check_Warehouse || check_Warehouse.type !== 'WAREHOUSE')
+      throw 'WAREHOUSE IS NOT EXIST'
+    let distributioncenter = await this._process.createProcess('DISTRIBUTIONCENTER')
     this.setToAddress(distributioncenter.address)
     return 'ADD SUCCESS'
   }
   // --------------------MARKET---------------------------
-  checkMarket(address) {
-    let checkMarket = this.getFactoryByAddress(address)
-    if (!checkMarket || checkMarket.type !== 'MARKET') throw `MARKET IS NOT EXIST`
-    return true
-  }
-  getMarketByAddress(address) {
-    return this.accounts.find(account => account.address === address)
-  }
-  async createMarket() {
-    await this.checkWarehouse(this.sender, 'WAREHOUSE')
-    let market = await this._product.createProduct('MARKET')
+  async Market(address_Warehouse) {
+    this._user.checkUser(this.sender, 'USER')
+    let check_Warehouse = this._process.getProcessByAddress(address_Warehouse)
+    if (!check_Warehouse || check_Warehouse.type !== 'WAREHOUSE')
+      throw 'WAREHOUSE IS NOT EXIST'
+    let market = await this._process.createProcess('MARKET')
     return market
   }
-  // --------------------END USER ---------------------------
-  async addEnduser() {
-    let checkMarket = this._product.getProductByAddress(this.sender)
-    if (!checkMarket || checkMarket.type !== 'MARKET') throw 'MARKET IS NOT EXIST'
-    let Enduser = await this._product.createProduct('ENDUSER')
-    this.setToAddress(Enduser.address)
-    return 'SUCCESS'
-  }
-  //-------------------------Get----------------------------------
-  getFactory() {
-    return this._product.getProductsByType('FACTORY')
-  }
-  getTransportation() {
-    return this._product.getProductsByType('TRANSPORTATION')
-  }
-  getBorderCrossing() {
-    return this._product.getProductsByType('BORDERCROSSING')
-  }
-  getWarehouse() {
-    return this._product.getProductsByType('WAREHOUSE')
-  }
   getMarket() {
-    return this._product.getProductsByType('MARKET')
+    return this._process.getProcessByType('MARKET')
+  }
+  // --------------------END USER ---------------------------
+  async EndUser(address_Market) {
+    this._user.checkUser(this.sender, 'USER')
+    let check_Market = this._process.getProcessByAddress(address_Market)
+    if (!check_Market || check_Market.type !== 'MARKET')
+      throw 'MARKET IS NOT EXIST'
+    let endUser = await this._process.createProcess('END_USER')
+    return endUser
+  }
+  getEndUser() {
+    return this._process.getProcessByType('END_USER')
   }
 }
 export default TokenMain;
