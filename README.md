@@ -1,4 +1,4 @@
-# CS30 SmartContract General API Information
+# CSE30 SmartContract General API Information
 
 
 ### Endpoints
